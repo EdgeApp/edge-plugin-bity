@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// @flow
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Component } from 'react'
+import { applyMiddleware, createStore } from 'redux'
+
+import Navigation from './scenes/Navigation'
+import { Provider } from 'react-redux'
+import { rootReducer } from './reducers'
+import thunk from 'redux-thunk'
+
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
+
+
+export default class App extends Component<{},{}> {
+  render () {
+    return <Provider store={createStoreWithMiddleware(rootReducer)}>
+    <Navigation />
+  </Provider>
+  }
 }
 
-export default App;
