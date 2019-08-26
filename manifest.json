@@ -1,0 +1,10 @@
+{
+  "pluginId": "co.edgesecure.bity",
+  "name": "Bity",
+  "subtitle": "Buy or sell crypto with US bank accounts\nBTC, ETH, DAI\nFee: 1% / Settlement: 2-5 days",
+  "provider": "Edge Wallet",
+  "iconUrl": "https://edge.app/wp-content/uploads/2019/01/wyre-logo-square-small.png",
+  "environment": {
+  },
+  "supportEmail": "support@bity.com"
+}
