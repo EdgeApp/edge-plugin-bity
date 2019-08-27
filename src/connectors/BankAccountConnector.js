@@ -1,14 +1,12 @@
 // @flow
 import type { Dispatch, State } from '../types/ReduxTypes'
 
-import { StartScene } from '../scenes/StartScene.js'
-import { THANK_YOU_ROUTE } from '../constants/index'
+import { BankAccountScene } from '../scenes/BankAccountScene'
 import { connect } from 'react-redux'
-import { initInfo } from '../actions/indexActions'
+import { saveBankInfo } from '../actions/indexActions'
 
 const mapStateToProps = (state: State) => {
   return {
-    accountStatus: state.Bity.status,
     poweredBy: {
       email: 'support@wyre.com',
       logo: require('../assets/poweredByLogo.png')
@@ -16,12 +14,9 @@ const mapStateToProps = (state: State) => {
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onNext: (history: Object) => {
-    history.push(THANK_YOU_ROUTE)
-  },
-  initInfo: () => dispatch(initInfo())
+  onNext: (iban:string, swift: string, history: Object) => dispatch(saveBankInfo(iban, swift, history))
 })
-export const StartSceneConnector = connect(
+export const BankAccountConnector = connect(
   mapStateToProps,
   mapDispatchToProps
-)(StartScene)
+)(BankAccountScene)

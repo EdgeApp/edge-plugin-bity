@@ -10,3 +10,5 @@ export type Action =
   | { type: 'ON_EXCHANGE_RATE', data: Object}
   | { type: 'ON_CHAINS_ADDED', data: Object}
   | { type: 'ON_TRANSACTION_HISTORY', data: Array<Transaction>}
+  | { type: 'SELECT_BUY'}
+  | { type: 'SELECT_SELL'}

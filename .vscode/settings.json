@@ -2,10 +2,12 @@
   "javascript.validate.enable": false,
   "flow.useNPMPackagedFlow": true,
   "cSpell.words": [
-      "animatable",
-      "changelly",
-      "cryptocurrency",
-      "shapeshift",
-      "sprintf"
+    "animatable",
+    "bity",
+    "changelly",
+    "cryptocurrency",
+    "iban",
+    "shapeshift",
+    "sprintf"
   ]
 }

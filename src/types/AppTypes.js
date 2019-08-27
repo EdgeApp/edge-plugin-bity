@@ -1,14 +1,10 @@
 // @flow
 
 export type LocalStorage = {
-  wyreAccountId: string | null,
-  wyreAccountStatus: string | null,
-  wyreAccountId_id: string | null,
-  wyrePaymentMethodId: string | null,
-  wyreNetworkTxId: string | null,
-  wyreAccountName: string | null,
-  wyreBTC: string | null,
-  wyreETH: string | null
+  iban: string | null,
+  bic_swift: string | null,
+  bank_reference: string | null,
+  status: string | null
 }
 
 export type PoweredByType = {

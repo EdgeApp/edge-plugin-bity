@@ -1,15 +1,15 @@
+// @flow
+import {
+  BANK_CONNECT_ROUTE,
+  START_ROUTE
+} from '../constants/index'
 import React, { Component } from 'react'
 import { Route, HashRouter as Router } from 'react-router-dom'
 import { createMuiTheme, withStyles } from '@material-ui/core/styles'
 
+import { BankAccountConnector } from '../connectors/BankAccountConnector.js'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-// @flow
-import {
-  START_ROUTE
-} from '../constants/index'
-import {
-  StartSceneConnector
-} from '../connectors/indexConnectors'
+import { StartSceneConnector } from '../connectors/StartSceneConnector.js'
 import history from '../history/history';
 
 const theme = createMuiTheme({
@@ -31,11 +31,11 @@ export const routes = [{
   path: START_ROUTE,
   main: StartSceneConnector,
   exact: true
-}/* , {
-  path: ADDRESS_ROUTE,
-  main: AddressConnector,
-  exact: true
 }, {
+  path: BANK_CONNECT_ROUTE,
+  main: BankAccountConnector,
+  exact: true
+}/* , {
   path: BANK_CONNECT_ROUTE,
   main: BankConnector,
   exact: true
