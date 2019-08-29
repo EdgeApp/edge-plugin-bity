@@ -10,8 +10,6 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
     return
   }
   const localStore: LocalStorage = await window.edgeProvider.readData(INITIAL_KEYS)
-  window.edgeProvider.consoleLog('LOCAL STORAGE ')
-  window.edgeProvider.consoleLog(localStore)
   if (localStore.status === APPROVED) {
     dispatch({type: 'LOCAL_DATA_INIT', data: localStore})
     return

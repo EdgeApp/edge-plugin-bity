@@ -12,7 +12,7 @@ const mapStateToProps = (state: State) => {
   const isSellDisabled = wallet === null
   return {
     wallet,
-    transactions: state.Transactions.transactions,
+    transactions: state.Transaction.transactions,
     isBuyDisabled,
     isSellDisabled,
     partnerName: 'Bity',
@@ -24,12 +24,12 @@ const mapStateToProps = (state: State) => {
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onSellClick: (history: Object) => {
-    dispatch({type: 'SELECT_BUY'})
+    dispatch({type: 'SELECT_SELL'})
     history.push(TRANSACTION_AMOUNT_ROUTE)
   },
   selectWallet: () => dispatch(selectWallet()),
   onBuyClick: (history: Object) => {
-    dispatch({type: 'SELECT_SELL'})
+    dispatch({type: 'SELECT_BUY'})
     history.push(TRANSACTION_AMOUNT_ROUTE)
   }
 })

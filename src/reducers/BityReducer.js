@@ -6,9 +6,7 @@ export type BityState = {
   bic_swift: string | null,
   bank_reference: string | null,
   status: string | null,
-  exchangeRates: Object,
-  cryptoAmount: string | null,
-  fiatAmount: string | null
+  exchangeRates: Object
 }
 
 export const initialState = {
@@ -16,9 +14,8 @@ export const initialState = {
   bic_swift: null,
   bank_reference: null,
   status: null,
-  exchangeRates: {},
-  cryptoAmount: null,
-  fiatAmount: null
+  exchangeRates: {}
+
 }
 
 export const BityReducer = (state: BityState = initialState, action: Action): BityState => {

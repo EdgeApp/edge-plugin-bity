@@ -29,8 +29,6 @@ class StartSceneComponent extends Component<Props, State> {
     this.props.onNext(this.props.history)
   }
   render () {
-    window.edgeProvider.consoleLog('Sign In Screen Props: ')
-    window.edgeProvider.consoleLog(this.props.accountStatus)
     const classes = this.props.classes
     if (!this.props.accountStatus) {
       return <div className={classes.containerSpinner}>

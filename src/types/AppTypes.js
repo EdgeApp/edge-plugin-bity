@@ -6,12 +6,10 @@ export type LocalStorage = {
   bank_reference: string | null,
   status: string | null
 }
-
 export type PoweredByType = {
   logo: any,
   email: string
 }
-
 export type Card = {
   title: string,
   body: string,
@@ -50,3 +48,15 @@ export type Transaction = {
   blockchainTxId: string | null,
   destNickname: string | null
 }
+export type Estimate = {
+  input: {
+    amount: string,
+    currency: string,
+    minimumAmount: string
+  },
+  output: {
+    amount: string,
+    currency: string
+  }
+}
+
