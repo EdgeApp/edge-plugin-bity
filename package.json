@@ -6,7 +6,7 @@
     "babel-eslint": "^8.1.0",
     "babel-jest": "^20.0.3",
     "babel-helper-define-map":"6.26.0",
-    "edge-plugin-screens-and-components" : "https://github.com/EdgeApp/edge-plugin-screens-and-components#80927b4",
+    "edge-plugin-screens-and-components" : "https://github.com/EdgeApp/edge-plugin-screens-and-components#07fc316",
     "edge-libplugin": "https://github.com/EdgeApp/edge-libplugin.git#9048d04",
     "eslint": "^4.17.1",
     "eslint-plugin-flowtype": "^2.35.0",

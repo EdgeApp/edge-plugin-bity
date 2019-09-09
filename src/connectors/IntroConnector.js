@@ -1,13 +1,14 @@
 // @flow
+
+import {BANK_CONNECT_ROUTE, MAIN_LOGO, POWERED_BY_LOGO_DARK} from '../constants'
 import type { Dispatch, State } from '../types/ReduxTypes'
 
-import {BANK_CONNECT_ROUTE} from '../constants'
 import {IntroScene} from 'edge-plugin-screens-and-components'
 // import { TestScene } from '../scenes/TestScene'
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state: State) => {
-  const logo = require('../assets/logo.png')
+  const logo = MAIN_LOGO
   const cards = [
     {
       title: 'BIty is cool',
@@ -26,10 +27,7 @@ const mapStateToProps = (state: State) => {
   return {
     logo,
     cards,
-    poweredBy: {
-      email: 'support@wyre.com',
-      logo: require('../assets/poweredByLogo.png')
-    }
+    poweredBy: POWERED_BY_LOGO_DARK
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({

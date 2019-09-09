@@ -3,7 +3,8 @@ import {
   BANK_CONNECT_ROUTE,
   START_ROUTE,
   TRANSACTION_AMOUNT_ROUTE,
-  TRANSACTION_CONFIRM_ROUTE
+  TRANSACTION_CONFIRM_ROUTE,
+  TRANSACTION_SUCCESS_ROUTE
 } from '../constants/index'
 import React, { Component } from 'react'
 import { Route, HashRouter as Router } from 'react-router-dom'
@@ -14,6 +15,7 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import { StartSceneConnector } from '../connectors/StartSceneConnector.js'
 import { TransactionAmountConnector } from '../connectors/TransactionAmountConnector.js'
 import { TransactionConfirmationConnector } from '../connectors/TransactionConfirmationConnector.js'
+import { TransactionSuccessConnector } from '../connectors/TransactionSuccessConnector.js'
 import history from '../history/history';
 
 const theme = createMuiTheme({
@@ -48,11 +50,11 @@ export const routes = [{
   path: TRANSACTION_CONFIRM_ROUTE,
   main: TransactionConfirmationConnector,
   exact: true
-}/* , {
-  path: BANK_CONNECT_ROUTE,
-  main: BankConnector,
-  exact: true
 }, {
+  path: TRANSACTION_SUCCESS_ROUTE,
+  main: TransactionSuccessConnector,
+  exact: true
+}/* , {
   path: DOC_UPLOAD_ROUTE,
   main: DocUploadConnector,
   exact: true
@@ -71,18 +73,6 @@ export const routes = [{
 }, {
   path: THANK_YOU_ROUTE,
   main: ThankYouConnector,
-  exact: true
-}, {
-  path: TRANSACTION_AMOUNT_ROUTE,
-  main: TransactionAmountConnector,
-  exact: true
-}, {
-  path: TRANSACTION_CONFIRM_ROUTE,
-  main: TransactionConfirmationConnector,
-  exact: true
-}, {
-  path: TRANSACTION_SUCCESS_ROUTE,
-  main: TransactionSuccessConnector,
   exact: true
 } */]
 

@@ -1,8 +1,9 @@
 // @flow
+
 import type { Dispatch, State } from '../types/ReduxTypes'
+import { POWERED_BY_LOGO, TRANSACTION_AMOUNT_ROUTE } from '../constants'
 
 import { BuySellScene } from 'edge-plugin-screens-and-components'
-import { TRANSACTION_AMOUNT_ROUTE } from '../constants'
 import { connect } from 'react-redux'
 import { selectWallet } from '../actions/indexActions'
 
@@ -16,10 +17,7 @@ const mapStateToProps = (state: State) => {
     isBuyDisabled,
     isSellDisabled,
     partnerName: 'Bity',
-    poweredBy: {
-      email: 'support@bity.com',
-      logo: require('../assets/poweredByLogo.png')
-    }
+    poweredBy: POWERED_BY_LOGO
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({

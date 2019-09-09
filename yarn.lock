@@ -3034,9 +3034,9 @@ ecc-jsbn@~0.1.1:
     pinkie-promise "^2.0.1"
     yargs "^8.0.2"
 
-"edge-plugin-screens-and-components@https://github.com/EdgeApp/edge-plugin-screens-and-components#80927b4":
+"edge-plugin-screens-and-components@https://github.com/EdgeApp/edge-plugin-screens-and-components#07fc316":
   version "0.0.1"
-  resolved "https://github.com/EdgeApp/edge-plugin-screens-and-components#80927b4367222c68917eec9e086540a7343557da"
+  resolved "https://github.com/EdgeApp/edge-plugin-screens-and-components#07fc316d6f50bfcf6e24a1cf4cb78bfceb451770"
   dependencies:
     js-sha256 "^0.9.0"
     moment "^2.22.2"

@@ -1,22 +1,20 @@
 // @flow
 import type { Dispatch, State } from '../types/ReduxTypes'
 
-import { BankAccountScene } from '../scenes/BankAccountScene'
+import { BankAccountInfoSceneMin }  from 'edge-plugin-screens-and-components'
+import { POWERED_BY_LOGO_DARK } from '../constants/index'
 import { connect } from 'react-redux'
 import { saveBankInfo } from '../actions/indexActions'
 
 const mapStateToProps = (state: State) => {
   return {
-    poweredBy: {
-      email: 'support@wyre.com',
-      logo: require('../assets/poweredByLogo.png')
-    }
+    poweredBy: POWERED_BY_LOGO_DARK
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onNext: (iban:string, swift: string, history: Object) => dispatch(saveBankInfo(iban, swift, history))
+  onNext: (arg: {iban:string, swift: string, history: Object}) => dispatch(saveBankInfo(arg.iban, arg.swift, arg.history))
 })
 export const BankAccountConnector = connect(
   mapStateToProps,
   mapDispatchToProps
-)(BankAccountScene)
+)(BankAccountInfoSceneMin)

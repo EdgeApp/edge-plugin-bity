@@ -1,9 +1,10 @@
 // @flow
 import type { Dispatch, State } from '../types/ReduxTypes'
+import {POWERED_BY_LOGO, TRANSACTION_SUCCESS_ROUTE} from '../constants/index'
 
-import {TRANSACTION_SUCCESS_ROUTE} from '../constants/index'
 import { TransactionConfirmationScreen } from 'edge-plugin-screens-and-components'
 import { connect } from 'react-redux'
+import { placeOrder } from '../actions/indexActions'
 
 const mapStateToProps = (state: State) => {
   const wallet = state.Wallet.wallet
@@ -21,10 +22,7 @@ const mapStateToProps = (state: State) => {
       total: null,
       onOfCurrencyCodeInFiat: null,
       buyOrSell: null,
-      poweredBy: {
-        email: 'support@bity.com',
-        logo: '../assets/poweredByLogo.png'
-      }
+      poweredBy: POWERED_BY_LOGO
     }
   }
   const isSell = state.Transaction.type === 'sell'
@@ -48,16 +46,11 @@ const mapStateToProps = (state: State) => {
     total,
     onOfCurrencyCodeInFiat: '€' + estimate.pricePerBTC,
     buyOrSell: state.Transaction.type,
-    poweredBy: {
-      email: 'support@bity.com',
-      logo: '../assets/poweredByLogo.png'
-    }
+    poweredBy: POWERED_BY_LOGO
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onNext: (history: Object) => {
-    history.push(TRANSACTION_SUCCESS_ROUTE)
-  }
+  onNext: (history: Object) => dispatch(placeOrder(history))
 })
 export const TransactionConfirmationConnector = connect(
   mapStateToProps,

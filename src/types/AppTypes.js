@@ -49,6 +49,7 @@ export type Transaction = {
   destNickname: string | null
 }
 export type Estimate = {
+  pricePerBTC: string,
   input: {
     amount: string,
     currency: string,

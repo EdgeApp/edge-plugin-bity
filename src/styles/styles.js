@@ -1,5 +1,5 @@
 // @flow
-// import THEME from '../constants/themeConstants'
+import THEME from '../constants/themeConstants'
 export const styles = {
   primaryButton: {
     height: '50px'
@@ -43,6 +43,7 @@ export const sceneContainerNoHeight = {
   display: 'flex',
   flex: 1,
   minHeight: '100%',
+  width:'100%',
   alignItems: 'center',
   flexDirection: 'column',
   paddingLeft: 20,
@@ -63,7 +64,8 @@ export const sceneButtonBottom = {
     flexShrink: 1,
     minHeight: 60,
     width: '100%',
-    maxHeight: 70
+    maxHeight: 70,
+    backgroundColor: THEME.COLORS.ACCENT_ORANGE
 }
 export const containerSpinner = {
   display: 'flex',

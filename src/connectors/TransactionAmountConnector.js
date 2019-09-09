@@ -1,6 +1,7 @@
 // @flow
 import type { Dispatch, State } from '../types/ReduxTypes'
 
+import { POWERED_BY_LOGO } from '../constants/index'
 import { TransactionAmountScreen } from 'edge-plugin-screens-and-components'
 import { connect } from 'react-redux'
 import { getEstimate } from '../actions/indexActions'
@@ -16,10 +17,7 @@ const mapStateToProps = (state: State) => {
     cryptoAmount: state.Transaction.cryptoAmount,
     fiatAmount: state.Transaction.fiatAmount,
     bankName,
-    poweredBy: {
-      email: 'support@bity.com',
-      logo: '../assets/poweredByLogo.png'
-    }
+    poweredBy: POWERED_BY_LOGO
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({
