@@ -6,6 +6,7 @@ export * from './themeConstants'
 export const INITIAL_KEYS = [
   'iban',
   'bic_swift',
+  'owner',
   'bank_reference',
   'status'
 ]

@@ -17,4 +17,5 @@ export type Action =
   | { type: 'CLEAR_ESTIMATE'}
   | { type: 'ON_ESTIMATE', data: Estimate}
   | { type: 'ON_EURO_DIVIDER', data: string}
+  | { type: 'UPDATE_BANK_INFO', data: LocalStorage}
 

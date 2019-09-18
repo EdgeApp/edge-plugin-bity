@@ -4,6 +4,7 @@ export type LocalStorage = {
   iban: string | null,
   bic_swift: string | null,
   bank_reference: string | null,
+  owner: string | null,
   status: string | null
 }
 export type PoweredByType = {

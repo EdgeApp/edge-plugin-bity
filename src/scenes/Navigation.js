@@ -1,6 +1,7 @@
 // @flow
 import {
   BANK_CONNECT_ROUTE,
+  EDIT_BANK_CONNECT_ROUTE,
   START_ROUTE,
   TRANSACTION_AMOUNT_ROUTE,
   TRANSACTION_CONFIRM_ROUTE,
@@ -11,6 +12,7 @@ import { Route, HashRouter as Router } from 'react-router-dom'
 import { createMuiTheme, withStyles } from '@material-ui/core/styles'
 
 import { BankAccountConnector } from '../connectors/BankAccountConnector.js'
+import { EditBankAccountConnector } from '../connectors/EditBankAccountConnector.js'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import { StartSceneConnector } from '../connectors/StartSceneConnector.js'
 import { TransactionAmountConnector } from '../connectors/TransactionAmountConnector.js'
@@ -40,6 +42,11 @@ export const routes = [{
 }, {
   path: BANK_CONNECT_ROUTE,
   main: BankAccountConnector,
+  exact: true
+},
+{
+  path: EDIT_BANK_CONNECT_ROUTE,
+  main: EditBankAccountConnector,
   exact: true
 },
 {

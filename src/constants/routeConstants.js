@@ -2,6 +2,7 @@
 export const START_ROUTE = '/'
 export const ADDRESS_ROUTE = '/address'
 export const BANK_CONNECT_ROUTE = '/bank'
+export const EDIT_BANK_CONNECT_ROUTE = '/editBank'
 export const DOC_UPLOAD_ROUTE = '/docUpload'
 export const PHONE_ROUTE = '/phone'
 export const SIGNATURE_ROUTE = '/signature'

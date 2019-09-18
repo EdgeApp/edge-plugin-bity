@@ -1,5 +1,6 @@
 // @flow
-import { APPROVED, INITIAL_KEYS, NOT_STARTED } from "../constants";
+
+import { APPROVED, INITIAL_KEYS, NOT_STARTED, TRANSACTION_AMOUNT_ROUTE } from "../constants";
 import type { Dispatch, GetState } from '../types/ReduxTypes'
 
 import type { LocalStorage } from '../types/AppTypes'
@@ -18,6 +19,7 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
     iban: null,
     bic_swift: null,
     bank_reference: null,
+    owner: null,
     status: NOT_STARTED
   }
 
@@ -27,15 +29,37 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
   dispatch({type: 'LOCAL_DATA_INIT', data: newObject})
 }
 
-export const saveBankInfo = (iban:string, swift: string, history: Object) => async (dispatch: Dispatch, getState: GetState) => {
+export const saveBankInfo = (iban:string, swift: string, owner: string, history: Object) => async (dispatch: Dispatch, getState: GetState) => {
+  window.edgeProvider.consoleLog('Saving info')
+  window.edgeProvider.consoleLog(iban)
+  window.edgeProvider.consoleLog(swift)
+  window.edgeProvider.consoleLog(owner)
   const newObject = {
     iban: iban,
     bic_swift: swift,
     bank_reference: null,
+    owner: owner,
     status: APPROVED
   }
   await window.edgeProvider.writeData(newObject)
   // const localStore: LocalStorage = await window.edgeProvider.readData(INITIAL_KEYS)
   dispatch({type: 'LOCAL_DATA_INIT', data: newObject})
   history.push('/')
+}
+export const updateBankInfo = (iban:string, swift: string, owner: string, history: Object) => async (dispatch: Dispatch, getState: GetState) => {
+  window.edgeProvider.consoleLog('updateBankInfo info')
+  window.edgeProvider.consoleLog(iban)
+  window.edgeProvider.consoleLog(swift)
+  window.edgeProvider.consoleLog(owner)
+  const newObject = {
+    iban: iban,
+    bic_swift: swift,
+    bank_reference: null,
+    owner: owner,
+    status: APPROVED
+  }
+  await window.edgeProvider.writeData(newObject)
+  // const localStore: LocalStorage = await window.edgeProvider.readData(INITIAL_KEYS)
+  dispatch({type: 'UPDATE_BANK_INFO', data: newObject})
+  history.push(TRANSACTION_AMOUNT_ROUTE)
 }

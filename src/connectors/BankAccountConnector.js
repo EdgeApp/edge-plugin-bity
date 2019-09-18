@@ -12,7 +12,7 @@ const mapStateToProps = (state: State) => {
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onNext: (arg: {iban:string, swift: string, history: Object}) => dispatch(saveBankInfo(arg.iban, arg.swift, arg.history))
+  onNext: (arg: {iban:string, swift: string, owner: string, history: Object}) => dispatch(saveBankInfo(arg.iban, arg.swift, arg.owner, arg.history))
 })
 export const BankAccountConnector = connect(
   mapStateToProps,
