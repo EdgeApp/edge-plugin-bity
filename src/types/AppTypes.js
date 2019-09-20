@@ -5,7 +5,8 @@ export type LocalStorage = {
   bic_swift: string | null,
   bank_reference: string | null,
   owner: string | null,
-  status: string | null
+  status: string | null,
+  orderIds: Array<string>
 }
 export type PoweredByType = {
   logo: any,
@@ -59,6 +60,17 @@ export type Estimate = {
   output: {
     amount: string,
     currency: string
+  }
+}
+
+export type OrderDetail = {
+  id: string,
+  message_to_sign: {
+    body: string,
+    signature_submission_url: string
+  },
+  payment_details:{
+    cryptoAddress: string
   }
 }
 

@@ -1,76 +1,114 @@
 // @flow
-import { APPROVED, INITIAL_KEYS, NOT_STARTED } from '../constants';
+
 import type { Dispatch, GetState } from '../types/ReduxTypes'
 import {TRANSACTION_CONFIRM_ROUTE, TRANSACTION_SUCCESS_ROUTE} from '../constants/index'
-import { apiEstimate, apiOrder, apiSendSignedTransaction, currentFiatDivider } from '../api/api'
+import { apiEstimate, apiOrder, apiSendSignedTransaction } from '../api/api'
 
+import type { OrderDetail } from '../types/AppTypes'
 export const placeOrder = (history: Object) => async (dispatch: Dispatch, getState: GetState) => {
-  // lets get the actual order ->
+  dispatch({ type: 'START_CONFIRM_TRANSACTION' })
   const state = getState()
   const estimate = state.Transaction.estimate
+  if(!estimate) {
+    return
+  }
+  const input = estimate.input
+  const output = estimate.output
+  if (!input || !output) {
+    return
+  }
   const isSell = state.Transaction.type === 'sell'
-  const cryptoAmount = isSell ? estimate.input.amount : estimate.output.amount
-  const fiatAmount = isSell ? estimate.output.amount : estimate.input.amount
-
+  const cryptoAmount = isSell ? input.amount : output.amount
+  const fiatAmount = isSell ? output.amount : input.amount
   const address = state.Wallet.wallet ? state.Wallet.wallet.receiveAddress.publicAddress : ''
-  window.edgeProvider.consoleLog('Address ' + address)
-  // state.Transaction.type
-  /* const orderObject = {
+  const walletName = state.Wallet.wallet ? state.Wallet.wallet.name : 'Bad Wallet Name'
+  const buyCryptoOrder = {
+    output: {
+      currency: 'BTC',
+      type: 'crypto_address',
+      crypto_address: address
+    },
     input: {
-      amount: state.Transaction.cryptoAmount,
+      amount: fiatAmount,
+      currency: 'EUR',
+      type: 'bank_account',
+      iban: state.Bity.iban,
+      bic_swift: state.Bity.bic_swift,
+      owner: {
+        name: state.Bity.owner
+      }
+    }
+  }
+  const sellCryptoOrder = {
+    input: {
+      amount: cryptoAmount,
       currency: 'BTC',
       type: 'crypto_address',
       crypto_address: address
     },
     output: {
-      iban: '871509600',// state.Bity.bic_swift,
-      bic_swift: 'COBADEFF', //state.Bity.bic_swift,
-      currency: 'EUR',
-      type: 'bank_account'
-    }
-  } */
-  const orderObject = {
-    output: {
-      currency: 'BTC',
-      type: 'crypto_address',
-      crypto_address: address // '0xf35074bbd0a9aee46f4ea137971feec024ab7048'
-    },
-    input: {
-      amount: '30',
+      iban: state.Bity.iban,
+      bic_swift: state.Bity.bic_swift,
       currency: 'CHF',
       type: 'bank_account',
-      iban: 'CH3600000000000000000',
-      bic_swift: 'XXXXCHXXXXX',
       owner: {
-        name: 'John Doe'
+        name: state.Bity.owner
       }
     }
   }
+  const orderObject = isSell ? sellCryptoOrder : buyCryptoOrder
+  const order: OrderDetail = await apiOrder(orderObject)
+    if (!order.input && !order.output) {
+      const error = new Error('Problem confirming transaction: Code:15')
+      window.edgeProvider.displayError(error)
+      dispatch({ type: 'END_CONFIRM_TRANSACTION' })
+      return
+    }
+    if (order.message_to_sign) {
+      try {
+        const {signature_submission_url, body} = order.message_to_sign
+        await apiSendSignedTransaction(signature_submission_url, body, address)
+        history.push(TRANSACTION_SUCCESS_ROUTE)
+        dispatch(recordOrder(order.id))
+        dispatch({ type: 'END_CONFIRM_TRANSACTION' })
+      } catch (e) {
+        window.edgeProvider.displayError(e)
+        dispatch({ type: 'END_CONFIRM_TRANSACTION' })
+      }
+      return
+    }
+    const info = {
+      currencyCode: 'BTC',
+      publicAddress: order.payment_details.cryptoAddress,
+      nativeAmount: cryptoAmount
+    }
+    const metadata = {
+      name: 'Bity',
+      category: 'Exchange: Sell BTC',
+      notes: 'Sell BTC from ' + walletName +' to Bity at address: ' + order.payment_details.cryptoAddress +'. Sell amount ' + fiatAmount +'. For assistance, please contact support@bity.com.'
+    }
+    try {
+      await window.edgeProvider.requestSpend([info], { metadata })
+      dispatch(recordOrder(order.id))
+      history.push(TRANSACTION_SUCCESS_ROUTE)
+      dispatch({ type: 'END_CONFIRM_TRANSACTION' })
+    } catch (e) {
+      window.edgeProvider.displayError('Cancelled')
+      dispatch({ type: 'END_CONFIRM_TRANSACTION' })
+    }
+}
 
-  // get return value and trace, look at response.headers
-  // response.headers.get('location') == what I am looking for,
-  window.edgeProvider.consoleLog('order Object')
-  window.edgeProvider.consoleLog(orderObject)
-  const order = await apiOrder(orderObject)
-  window.edgeProvider.consoleLog('order')
-  window.edgeProvider.consoleLog(order)
-  if (order.message_to_sign) {
-    const {signature_submission_url, body} = order.message_to_sign
-    // signature_submission_url
-    // body
-    const sigResult = await apiSendSignedTransaction(signature_submission_url, body, address)
-    // const signed result =
-    return
+export const recordOrder = (arg: string) => async (dispatch: Dispatch, getState: GetState) => {
+  const state = getState()
+  const orderIds = state.Bity.orderIds
+  const newObject = {
+    orderIds: orderIds.push(arg)
   }
-  /* const signedTransaction = await window.edgeProvider.signMessage('message')
-  window.edgeProvider.consoleLog('signedTransaction')
-  window.edgeProvider.consoleLog(signedTransaction)
-*/
-  history.push(TRANSACTION_SUCCESS_ROUTE)
+  await window.edgeProvider.writeData(newObject)
+  dispatch({type: 'ADD_TRANSACTION', data: arg})
 }
 
 export const getEstimate = (fiat: string, history: Object) => async (dispatch: Dispatch, getState: GetState) => {
-  // clear any existing estimate
   dispatch({type: 'CLEAR_ESTIMATE'})
   history.push(TRANSACTION_CONFIRM_ROUTE)
   const state = getState()
@@ -84,7 +122,6 @@ export const getEstimate = (fiat: string, history: Object) => async (dispatch: D
       currency: 'EUR'
     }
     const payload1 = {input: inputFix, output: outputFix}
-    window.edgeProvider.consoleLog(' BEfore estimate  ')
     const fiatDividerEst = await apiEstimate(payload1)
     const fiatDivider = fiatDividerEst.output.amount
     const inputCurrency = isSell ? 'BTC' : 'EUR'
@@ -103,7 +140,6 @@ export const getEstimate = (fiat: string, history: Object) => async (dispatch: D
     estimate.pricePerBTC = fiatDividerEst.output.amount
     dispatch({type: 'ON_ESTIMATE', data: estimate})
   } catch (e) {
-    window.edgeProvider.consoleLog('ERROR')
-    window.edgeProvider.consoleLog(e)
+    window.edgeProvider.displayError(e)
   }
 }

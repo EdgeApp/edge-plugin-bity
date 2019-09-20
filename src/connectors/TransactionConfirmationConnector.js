@@ -1,10 +1,14 @@
 // @flow
 import type { Dispatch, State } from '../types/ReduxTypes'
-import {POWERED_BY_LOGO, TRANSACTION_SUCCESS_ROUTE} from '../constants/index'
 
+import { POWERED_BY_LOGO } from '../constants/index'
 import { TransactionConfirmationScreen } from 'edge-plugin-screens-and-components'
 import { connect } from 'react-redux'
 import { placeOrder } from '../actions/indexActions'
+
+const trimAccountNumber = (arg: string) => {
+  return arg.substring(arg.length - 4, arg.length);
+}
 
 const mapStateToProps = (state: State) => {
   const wallet = state.Wallet.wallet
@@ -22,13 +26,14 @@ const mapStateToProps = (state: State) => {
       total: null,
       onOfCurrencyCodeInFiat: null,
       buyOrSell: null,
-      poweredBy: POWERED_BY_LOGO
+      poweredBy: POWERED_BY_LOGO,
+      processing: false
     }
   }
   const isSell = state.Transaction.type === 'sell'
   const cryptoAmount = isSell ? estimate.input.amount : estimate.output.amount
   const fiatAmount = isSell ? estimate.output.amount : estimate.input.amount
-  const account = state.Bity.iban ? 'accnt: ' + state.Bity.iban : ''
+  const account = state.Bity.iban ? 'account ending in: ' + trimAccountNumber(state.Bity.iban) : ''
   const walletName = wallet && wallet.name ? wallet.name : ''
   const withdrawFrom = isSell && wallet ? walletName : account
   const depositTo = isSell ? account : walletName
@@ -46,7 +51,8 @@ const mapStateToProps = (state: State) => {
     total,
     onOfCurrencyCodeInFiat: '€' + estimate.pricePerBTC,
     buyOrSell: state.Transaction.type,
-    poweredBy: POWERED_BY_LOGO
+    poweredBy: POWERED_BY_LOGO,
+    processing: state.Transaction.processing
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({
