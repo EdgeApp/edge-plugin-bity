@@ -11,17 +11,14 @@ const mapStateToProps = (state: State) => {
   const logo = MAIN_LOGO
   const cards = [
     {
-      title: 'BIty is cool',
-      body: 'The following fees are applied for buying and selling cryptocurrency with Bity:',
+      title: 'Bity',
+      body: 'Bity is fiat to crypto exchange allowing users to safely buy and sell cryptocurrency with a bank account directly from Edge',
       list: []
     },
     {
-      title: 'KYC-Less',
-      body: '5 K a day without KYC :',
-      list: [
-        'Edge Wallet 0.5%',
-        'Bity 0.5%'
-      ]
+      title: 'No KYC Needed',
+      body: 'You can trade up to 5K a day without KYC',
+      list: []
     }
   ]
   return {

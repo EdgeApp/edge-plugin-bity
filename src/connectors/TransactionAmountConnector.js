@@ -7,8 +7,12 @@ import { TransactionAmountScreen } from 'edge-plugin-screens-and-components'
 import { connect } from 'react-redux'
 import { getEstimate } from '../actions/indexActions'
 
+const trimAccountNumber = (arg: string) => {
+  return arg.substring(arg.length - 4, arg.length);
+}
+
 const mapStateToProps = (state: State) => {
-  const bankName = state.Bity.iban ? 'accnt:' + state.Bity.iban : ''
+  const bankName = state.Bity.iban ? 'account ending in: ' + trimAccountNumber(state.Bity.iban) : ''
   return {
     wallet: state.Wallet.wallet,
     exchangeRatesFrom: 0,
