@@ -1,10 +1,10 @@
 // @flow
 import React, { Component } from 'react'
 
+import { APPROVED } from '../constants/index'
 import { BuySellConnector } from '../connectors/BuySellConnector'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { IntroConnector } from '../connectors/IntroConnector'
-import { NOT_STARTED } from '../constants/index'
 // import { PendingConnector } from '../connectors/PendingConnector'
 import {
   containerSpinner
@@ -36,13 +36,13 @@ class StartSceneComponent extends Component<Props, State> {
     </div>
     }
     // return <IntroConnector history={this.props.history}/>
-    if(this.props.accountStatus === NOT_STARTED) {
-      return <IntroConnector history={this.props.history}/>
+    if(this.props.accountStatus === APPROVED) {
+      return <BuySellConnector history={this.props.history}/>
     }
     /* if(this.props.accountStatus === PENDING) {
       return <PendingConnector history={this.props.history}/>
     } */
-    return <BuySellConnector history={this.props.history}/>
+    return <IntroConnector history={this.props.history}/>
   }
 }
 const styles = theme => ({
