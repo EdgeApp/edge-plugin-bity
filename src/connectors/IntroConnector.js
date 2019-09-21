@@ -11,7 +11,7 @@ const mapStateToProps = (state: State) => {
   const logo = MAIN_LOGO
   const cards = [
     {
-      title: 'Bity',
+      title: 'Bity ',
       body: 'Bity is fiat to crypto exchange allowing users to safely buy and sell cryptocurrency with a bank account directly from Edge',
       list: []
     },
