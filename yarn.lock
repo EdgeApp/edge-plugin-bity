@@ -869,7 +869,7 @@ babel-helper-call-delegate@^6.24.1:
     babel-traverse "^6.24.1"
     babel-types "^6.24.1"
 
-babel-helper-define-map@6.26.0:
+babel-helper-define-map@6.26.0, babel-helper-define-map@^6.24.1:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-helper-define-map/-/babel-helper-define-map-6.26.0.tgz#a5f56dab41a25f97ecb498c7ebaca9819f95be5f"
   integrity sha1-pfVtq0GiX5fstJjH66ypgZ+Vvl8=
@@ -3194,7 +3194,7 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
-"edge-libplugin@https://github.com/EdgeApp/edge-libplugin.git#9744aaf61b8064":
+"edge-libplugin@https://github.com/EdgeApp/edge-libplugin.git#9744aaf61b80":
   version "0.0.1"
   resolved "https://github.com/EdgeApp/edge-libplugin.git#9744aaf61b80647961297b84bc7702e9d817f86c"
   dependencies:
@@ -3206,12 +3206,11 @@ ecc-jsbn@~0.1.1:
     pinkie-promise "^2.0.1"
     yargs "^8.0.2"
 
-"edge-plugin-screens-and-components@https://github.com/EdgeApp/edge-plugin-screens-and-components#a5eb563":
+"edge-plugin-screens-and-components@https://github.com/EdgeApp/edge-plugin-screens-and-components#00bb41f2f27f":
   version "0.0.1"
-  resolved "https://github.com/EdgeApp/edge-plugin-screens-and-components#a5eb563d70f1a4e66a48972764309611316b8c2b"
+  resolved "https://github.com/EdgeApp/edge-plugin-screens-and-components#00bb41f2f27ff39430c72223ebbb774010e2b566"
   dependencies:
     js-sha256 "^0.9.0"
-    moment "^2.22.2"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -7084,11 +7083,6 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
-
-moment@^2.22.2:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
-  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
 ms@2.0.0:
   version "2.0.0"
