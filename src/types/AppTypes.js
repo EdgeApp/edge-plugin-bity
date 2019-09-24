@@ -70,7 +70,15 @@ export type OrderDetail = {
     signature_submission_url: string
   },
   payment_details:{
-    cryptoAddress: string
+    crypto_address: string,
+    account_number: string,
+    bank_address: string,
+    bank_code: string,
+    iban: string,
+    recipient: string,
+    reference: string,
+    swift_bic: string,
+    type: string
   }
 }
 

@@ -12,12 +12,25 @@ const mapStateToProps = (state: State) => {
   const cards = [
     {
       title: 'Bity ',
-      body: 'Bity is fiat to crypto exchange allowing users to safely buy and sell cryptocurrency with a bank account directly from Edge',
+      body: 'Bity is a compliant fiat to crypto exchange allowing users to safely buy and sell cryptocurrency with a bank account or directly from Edge.',
       list: []
     },
     {
-      title: 'No KYC Needed',
-      body: 'You can trade up to 5K a day without KYC',
+      title: 'Fee',
+      body: 'The following fees are applied for buying and selling cryptocurrency with Bity',
+      list: [
+        'Edge 0.15%',
+        'Bity 0.65%'
+      ]
+    },
+    {
+      title: 'No Personal Info ',
+      body: 'Users can trade up to €5000 per day without providing any personal info.',
+      list: []
+    },
+    {
+      title: 'Support',
+      body: 'For support please contact \nsupport@bity.com',
       list: []
     }
   ]

@@ -1,4 +1,5 @@
 // @flow
+
 import type { Dispatch, State } from '../types/ReduxTypes'
 
 import { EDIT_BANK_CONNECT_ROUTE } from '../constants/index'

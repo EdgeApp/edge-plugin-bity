@@ -2,10 +2,10 @@
 
 import type { Dispatch, State } from '../types/ReduxTypes'
 import { POWERED_BY_LOGO, TRANSACTION_AMOUNT_ROUTE } from '../constants'
+import { getPreviousOrders, selectWallet } from '../actions/indexActions'
 
 import { BuySellScene } from 'edge-plugin-screens-and-components'
 import { connect } from 'react-redux'
-import { selectWallet } from '../actions/indexActions'
 
 const mapStateToProps = (state: State) => {
   const wallet = state.Wallet.wallet
@@ -29,6 +29,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onBuyClick: (history: Object) => {
     dispatch({type: 'SELECT_BUY'})
     history.push(TRANSACTION_AMOUNT_ROUTE)
+  },
+  getPreviousOrders: () => {
+    window.edgeProvider.consoleLog('In the connector and getting orders')
+    dispatch(getPreviousOrders())
   }
 })
 export const BuySellConnector = connect(

@@ -25,7 +25,7 @@ const mapStateToProps = (state: State) => {
       fees: null,
       total: null,
       onOfCurrencyCodeInFiat: null,
-      buyOrSell: null,
+      buyOrSell: state.Transaction.type,
       poweredBy: POWERED_BY_LOGO,
       processing: false
     }

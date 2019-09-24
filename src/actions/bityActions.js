@@ -2,9 +2,22 @@
 
 import type { Dispatch, GetState } from '../types/ReduxTypes'
 import {TRANSACTION_CONFIRM_ROUTE, TRANSACTION_SUCCESS_ROUTE} from '../constants/index'
-import { apiEstimate, apiOrder, apiSendSignedTransaction } from '../api/api'
+import { apiEstimate, apiOrder, getOrders } from '../api/api'
 
 import type { OrderDetail } from '../types/AppTypes'
+
+export const getPreviousOrders = () => async (dispatch: Dispatch, getState: GetState) => {
+  // console.log('bity actions getPrvious orders ')
+  window.edgeProvider.consoleLog('Getting previous orders.')
+  try {
+    const orders = await getOrders()
+    window.edgeProvider.consoleLog('Orders in Bity Actions.')
+    window.edgeProvider.consoleLog(orders)
+  } catch(e) {
+    window.edgeProvider.consoleLog('Orders Error.')
+    window.edgeProvider.consoleLog(e)
+  }
+}
 export const placeOrder = (history: Object) => async (dispatch: Dispatch, getState: GetState) => {
   dispatch({ type: 'START_CONFIRM_TRANSACTION' })
   const state = getState()
@@ -49,7 +62,7 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
     output: {
       iban: state.Bity.iban,
       bic_swift: state.Bity.bic_swift,
-      currency: 'CHF',
+      currency: 'EUR',
       type: 'bank_account',
       owner: {
         name: state.Bity.owner
@@ -57,17 +70,29 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
     }
   }
   const orderObject = isSell ? sellCryptoOrder : buyCryptoOrder
-  const order: OrderDetail = await apiOrder(orderObject)
+  try {
+    const order: OrderDetail = await apiOrder(orderObject)
+    console.log('Order call')
     if (!order.input && !order.output) {
       const error = new Error('Problem confirming transaction: Code:15')
       window.edgeProvider.displayError(error)
       dispatch({ type: 'END_CONFIRM_TRANSACTION' })
       return
     }
-    if (order.message_to_sign) {
+    // id this is a buy -> here is the details.
+    if(!isSell) {
+      //payment_details
+      return
+    }
+    /* if (order.message_to_sign) {
       try {
         const {signature_submission_url, body} = order.message_to_sign
         await apiSendSignedTransaction(signature_submission_url, body, address)
+        // get the order details again. So we can get payment information
+        const oderDetailWireInfo = await getOrderDetail(order.id)
+        window.edgeProvider.consoleLog('oderDetailWireInfo')
+        window.edgeProvider.consoleLog(oderDetailWireInfo)
+        // Write this info to reducer, add new route for displaying information.
         history.push(TRANSACTION_SUCCESS_ROUTE)
         dispatch(recordOrder(order.id))
         dispatch({ type: 'END_CONFIRM_TRANSACTION' })
@@ -76,16 +101,17 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
         dispatch({ type: 'END_CONFIRM_TRANSACTION' })
       }
       return
-    }
+    } */
+    const sourceAmount = (Number(cryptoAmount)) * 100000000
     const info = {
       currencyCode: 'BTC',
-      publicAddress: order.payment_details.cryptoAddress,
-      nativeAmount: cryptoAmount
+      publicAddress: order.payment_details.crypto_address,
+      nativeAmount: sourceAmount.toString()// cryptoAmount
     }
     const metadata = {
       name: 'Bity',
       category: 'Exchange: Sell BTC',
-      notes: 'Sell BTC from ' + walletName +' to Bity at address: ' + order.payment_details.cryptoAddress +'. Sell amount ' + fiatAmount +'. For assistance, please contact support@bity.com.'
+      notes: 'Sell BTC from ' + walletName +' to Bity at address: ' + order.payment_details.crypto_address +'. Sell amount ' + fiatAmount +'. For assistance, please contact support@bity.com.'
     }
     try {
       await window.edgeProvider.requestSpend([info], { metadata })
@@ -96,6 +122,11 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
       window.edgeProvider.displayError('Cancelled')
       dispatch({ type: 'END_CONFIRM_TRANSACTION' })
     }
+  } catch (e) {
+    window.edgeProvider.displayError(e)
+    dispatch({ type: 'END_CONFIRM_TRANSACTION' })
+    return
+  }
 }
 
 export const recordOrder = (arg: string) => async (dispatch: Dispatch, getState: GetState) => {
@@ -109,6 +140,7 @@ export const recordOrder = (arg: string) => async (dispatch: Dispatch, getState:
 }
 
 export const getEstimate = (fiat: string, history: Object) => async (dispatch: Dispatch, getState: GetState) => {
+  window.edgeProvider.consoleLog('Getting Estimate')
   dispatch({type: 'CLEAR_ESTIMATE'})
   history.push(TRANSACTION_CONFIRM_ROUTE)
   const state = getState()

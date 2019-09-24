@@ -22,29 +22,62 @@ export async function apiEstimate(data: Object) {
   throw new Error('Unable to process request at this time: code 35')
 }
 
-export async function apiSendSignedTransaction(url: string, message: string, address: string) {
-  const signedTransaction = await window.edgeProvider.signMessage(message, address)
+export async function getOrders() {
   const request = {
-    method: 'POST',
+    method: 'GET',
     headers: {
-      Host: 'exchange.api.bity.com',
-      'Content-Type': '*/*'
+      'Host': 'exchange.api.bity.com',
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: signedTransaction
+    credentials: 'include'
   }
-  const url2 = 'https://exchange.api.bity.com' + url
-  const response = await window.fetch(url2, request)
-  if (response.status === 400) {
-    window.edgeProvider.consoleLog('BAD BAD BAD ')
-    throw new Error(['Could not complete transaction. Code: 470'])
-  }
-  if (response.status === 204) {
-    window.edgeProvider.consoleLog('GOOD GOOD GOOD ')
-    return true
-  }
-  throw new Error(['Could not complete transaction. Code: 003'])
-}
+  const url = 'https://exchange.api.bity.com/v2/orders'
+  try {
+    const result = await window.fetch(url, request)
+    window.edgeProvider.consoleLog('response get orders ')
+    window.edgeProvider.consoleLog(result)
 
+    if(result.status === 200) {
+      const newData = await result.json()
+      window.edgeProvider.consoleLog('newData')
+      window.edgeProvider.consoleLog(newData)
+      return newData
+    }
+    window.edgeProvider.consoleLog('response get orders ')
+    window.edgeProvider.consoleLog(result)
+    throw new Error('Can not get orders result side')
+  } catch (e) {
+    throw new Error('Can not get orders')
+  }
+}
+export async function getOrderDetail(orderId: string) {
+  const request = {
+    method: 'GET',
+    headers: {
+      'Host': 'exchange.api.bity.com',
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+  }
+  const url = 'https://exchange.api.bity.com/v2/orders/' + orderId
+  try {
+    const response = await window.fetch(url, request)
+    window.edgeProvider.consoleLog('What code is the response ', response.status)
+    if(response.status === 200) {
+      const newData = await response.json()
+      window.edgeProvider.consoleLog('newData')
+      window.edgeProvider.consoleLog(newData)
+      return newData
+    }
+    throw new Error('Could not get the wire payment information')
+  } catch (e) {
+    window.edgeProvider.consoleLog('We are in an error here handle it')
+    window.edgeProvider.consoleLog(e)
+    throw e
+  }
+}
 export async function apiOrder(data: Object) {
   const request = {
     method: 'POST',
@@ -61,8 +94,11 @@ export async function apiOrder(data: Object) {
 
   try {
     const response = await window.edgeProvider.deprecatedAndNotSupportedDouble(request, url, url2)
+    console.log('What code is the response ', response.status)
     return response
   } catch (e) {
+    console.log('We are in an error here handle it')
+    console.log(e)
     throw e
   }
 }
