@@ -71,6 +71,7 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
   }
   const orderObject = isSell ? sellCryptoOrder : buyCryptoOrder
   try {
+    // $FlowFixMe
     const order: OrderDetail = await apiOrder(orderObject)
     console.log('Order call')
     if (!order.input && !order.output) {
