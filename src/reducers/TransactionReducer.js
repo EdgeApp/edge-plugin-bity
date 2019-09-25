@@ -1,6 +1,6 @@
 // @flow
 
-import type { Estimate, Transaction } from '../types/AppTypes'
+import type { Estimate, Transaction, WireInformation } from '../types/AppTypes'
 
 import type { Action } from '../types/ReduxTypes'
 
@@ -10,7 +10,8 @@ export type TransactionState = {
   cryptoAmount: string | null,
   fiatAmount: string | null,
   estimate: Estimate | null,
-  processing: boolean
+  processing: boolean,
+  wireInformation: WireInformation | null
 
 }
 
@@ -20,11 +21,14 @@ export const initialState = {
   cryptoAmount: null,
   fiatAmount: null,
   estimate: null,
-  processing: false
+  processing: false,
+  wireInformation: null
 }
 
 export const TransactionReducer = (state: TransactionState = initialState, action: Action): TransactionState => {
   switch (action.type) {
+    case 'ADD_WIRE_INFO':
+    return {...state, wireInformation: action.data, processing: false}
     case 'START_CONFIRM_TRANSACTION':
       return {...state, processing: true}
     case 'END_CONFIRM_TRANSACTION':

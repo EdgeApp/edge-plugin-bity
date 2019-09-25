@@ -21,7 +21,8 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
     bank_reference: null,
     owner: null,
     status: NOT_STARTED,
-    orderIds: []
+    orderIds: [],
+    orders: []
   }
 
   if (!localStore.status) {
