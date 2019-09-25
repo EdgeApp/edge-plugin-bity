@@ -83,35 +83,25 @@ export const routes = [{
   exact: true
 } */]
 
-const appStyles = (theme) => ({
-  content: {
-    height: '100%'
-  }
-})
-
-type AppProps = {
-  classes: Object
-}
+type AppProps = {}
 
 class Navigation extends Component<AppProps> {
   render () {
     return (
       <MuiThemeProvider theme={theme}>
         <Router history={history}>
-          <div className={this.props.classes.content}>
-            {routes.map((route, index) => (
-              <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                component={route.main}
-              />
-            ))}
-          </div>
+          {routes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              component={route.main}
+            />
+          ))}
         </Router>
       </MuiThemeProvider>
     )
   }
 }
 
-export default withStyles(appStyles)(Navigation)
+export default Navigation
