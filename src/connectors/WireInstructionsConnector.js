@@ -14,13 +14,13 @@ const mapStateToProps = (state: State) => {
       message
     }
   }
-  message.push('To complete your purchase. wire funds to Bity.  You must include the reference')
+  message.push('To complete your purchase. Send funds to Bity.  You must include the reference')
   message.push('Recipient: ' + wireInformation.recipient)
   message.push('Bank Address: ' + wireInformation.bank_address)
   message.push('Bank Code: ' + wireInformation.bank_code)
   message.push('Account: ' + wireInformation.account)
-  message.push('iban: ' + wireInformation.iban)
-  message.push('swift bic: ' + wireInformation.swift_bic)
+  message.push('IBAN: ' + wireInformation.iban)
+  message.push('SWIFT BIC: ' + wireInformation.swift_bic)
   message.push('Reference: ' + wireInformation.reference)
   return {
     poweredBy: POWERED_BY_LOGO,
