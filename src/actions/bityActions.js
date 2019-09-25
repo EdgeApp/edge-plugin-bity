@@ -1,13 +1,12 @@
 // @flow
 
 import type { Dispatch, GetState } from '../types/ReduxTypes'
-import {TRANSACTION_CONFIRM_ROUTE, TRANSACTION_SUCCESS_ROUTE} from '../constants/index'
+import {TRANSACTION_CONFIRM_ROUTE, TRANSACTION_SUCCESS_ROUTE, WIRE_INSTRUCTIONS_ROUTE} from '../constants/index'
 import { apiEstimate, apiOrder, getOrders } from '../api/api'
 
 import type { OrderDetail } from '../types/AppTypes'
 
 export const getPreviousOrders = () => async (dispatch: Dispatch, getState: GetState) => {
-  // console.log('bity actions getPrvious orders ')
   window.edgeProvider.consoleLog('Getting previous orders.')
   try {
     const orders = await getOrders()
@@ -83,26 +82,11 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
     // id this is a buy -> here is the details.
     if(!isSell) {
       //payment_details
+      dispatch({type: 'ADD_WIRE_INFO', data: order.payment_details})
+      dispatch(recordOrder(order))
+      history.push(WIRE_INSTRUCTIONS_ROUTE)
       return
     }
-    /* if (order.message_to_sign) {
-      try {
-        const {signature_submission_url, body} = order.message_to_sign
-        await apiSendSignedTransaction(signature_submission_url, body, address)
-        // get the order details again. So we can get payment information
-        const oderDetailWireInfo = await getOrderDetail(order.id)
-        window.edgeProvider.consoleLog('oderDetailWireInfo')
-        window.edgeProvider.consoleLog(oderDetailWireInfo)
-        // Write this info to reducer, add new route for displaying information.
-        history.push(TRANSACTION_SUCCESS_ROUTE)
-        dispatch(recordOrder(order.id))
-        dispatch({ type: 'END_CONFIRM_TRANSACTION' })
-      } catch (e) {
-        window.edgeProvider.displayError(e)
-        dispatch({ type: 'END_CONFIRM_TRANSACTION' })
-      }
-      return
-    } */
     const sourceAmount = (Number(cryptoAmount)) * 100000000
     const info = {
       currencyCode: 'BTC',
@@ -116,7 +100,7 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
     }
     try {
       await window.edgeProvider.requestSpend([info], { metadata })
-      dispatch(recordOrder(order.id))
+      dispatch(recordOrder(order))
       history.push(TRANSACTION_SUCCESS_ROUTE)
       dispatch({ type: 'END_CONFIRM_TRANSACTION' })
     } catch (e) {
@@ -130,14 +114,15 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
   }
 }
 
-export const recordOrder = (arg: string) => async (dispatch: Dispatch, getState: GetState) => {
+export const recordOrder = (order: Object) => async (dispatch: Dispatch, getState: GetState) => {
   const state = getState()
-  const orderIds = state.Bity.orderIds
+  const orders = state.Bity.orders
+  orders.push(order)
   const newObject = {
-    orderIds: orderIds.push(arg)
+    orders: orders
   }
   await window.edgeProvider.writeData(newObject)
-  dispatch({type: 'ADD_TRANSACTION', data: arg})
+  dispatch({type: 'ADD_TRANSACTION', data: order})
 }
 
 export const getEstimate = (fiat: string, history: Object) => async (dispatch: Dispatch, getState: GetState) => {

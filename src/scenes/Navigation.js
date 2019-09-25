@@ -5,11 +5,11 @@ import {
   START_ROUTE,
   TRANSACTION_AMOUNT_ROUTE,
   TRANSACTION_CONFIRM_ROUTE,
-  TRANSACTION_SUCCESS_ROUTE
+  TRANSACTION_SUCCESS_ROUTE,
+  WIRE_INSTRUCTIONS_ROUTE
 } from '../constants/index'
 import React, { Component } from 'react'
 import { Route, HashRouter as Router } from 'react-router-dom'
-import { createMuiTheme, withStyles } from '@material-ui/core/styles'
 
 import { BankAccountConnector } from '../connectors/BankAccountConnector.js'
 import { EditBankAccountConnector } from '../connectors/EditBankAccountConnector.js'
@@ -18,6 +18,8 @@ import { StartSceneConnector } from '../connectors/StartSceneConnector.js'
 import { TransactionAmountConnector } from '../connectors/TransactionAmountConnector.js'
 import { TransactionConfirmationConnector } from '../connectors/TransactionConfirmationConnector.js'
 import { TransactionSuccessConnector } from '../connectors/TransactionSuccessConnector.js'
+import { WireInstructionsConnector } from '../connectors/WireInstructionsConnector.js'
+import { createMuiTheme } from '@material-ui/core/styles'
 import history from '../history/history';
 
 const theme = createMuiTheme({
@@ -61,11 +63,11 @@ export const routes = [{
   path: TRANSACTION_SUCCESS_ROUTE,
   main: TransactionSuccessConnector,
   exact: true
-}/* , {
-  path: DOC_UPLOAD_ROUTE,
-  main: DocUploadConnector,
-  exact: true
 }, {
+  path: WIRE_INSTRUCTIONS_ROUTE,
+  main: WireInstructionsConnector,
+  exact: true
+}/* , {
   path: PHONE_ROUTE,
   main: PhoneConnector,
   exact: true

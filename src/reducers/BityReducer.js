@@ -8,7 +8,8 @@ export type BityState = {
   owner: string | null,
   status: string | null,
   exchangeRates: Object,
-  orderIds: Array<string>
+  orderIds: Array<string>,
+  orders: Array<Object>
 }
 
 export const initialState = {
@@ -18,16 +19,17 @@ export const initialState = {
   owner: null,
   status: null,
   exchangeRates: {},
-  orderIds: []
+  orderIds: [],
+  orders: []
 
 }
 
 export const BityReducer = (state: BityState = initialState, action: Action): BityState => {
   switch (action.type) {
     case 'ADD_TRANSACTION':
-      const array = state.orderIds
+      const array = state.orders
       array.push(action.data)
-      return {...state, orderIds: array}
+      return {...state, orders: array}
     case 'UPDATE_BANK_INFO':
       return {
         ...state,
@@ -36,7 +38,8 @@ export const BityReducer = (state: BityState = initialState, action: Action): Bi
         bank_reference: action.data.bank_reference,
         owner: action.data.owner,
         status: action.data.status,
-        orderIds: action.data.orderIds
+        orderIds: action.data.orderIds,
+        orders: action.data.orders
       }
     case 'LOCAL_DATA_INIT':
       return {
@@ -46,7 +49,8 @@ export const BityReducer = (state: BityState = initialState, action: Action): Bi
         bank_reference: action.data.bank_reference,
         owner: action.data.owner,
         status: action.data.status,
-        orderIds: action.data.orderIds
+        orderIds: action.data.orderIds,
+        orders: action.data.orders
       }
     default:
       return state

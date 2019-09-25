@@ -11,4 +11,5 @@ export const THANK_YOU_ROUTE = '/thanks'
 export const TRANSACTION_AMOUNT_ROUTE = '/transaction_amount'
 export const TRANSACTION_CONFIRM_ROUTE = '/transaction_confirm'
 export const TRANSACTION_SUCCESS_ROUTE = '/transaction_success'
+export const WIRE_INSTRUCTIONS_ROUTE = '/wire_instructions'
 
