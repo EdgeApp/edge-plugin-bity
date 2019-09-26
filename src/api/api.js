@@ -84,7 +84,8 @@ export async function apiOrder(data: Object) {
     headers: {
       'Host': 'exchange.api.bity.com',
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Client-Id': '4949bf59-c23c-4d71-949e-f5fd56ff815b'
     },
     credentials: 'include',
     body: JSON.stringify(data)

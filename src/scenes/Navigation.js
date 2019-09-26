@@ -19,7 +19,6 @@ import { TransactionAmountConnector } from '../connectors/TransactionAmountConne
 import { TransactionConfirmationConnector } from '../connectors/TransactionConfirmationConnector.js'
 import { TransactionSuccessConnector } from '../connectors/TransactionSuccessConnector.js'
 import { WireInstructionsConnector } from '../connectors/WireInstructionsConnector.js'
-import { IntroConnector } from '../connectors/IntroConnector.js'
 import { createMuiTheme } from '@material-ui/core/styles'
 import history from '../history/history';
 
@@ -40,7 +39,7 @@ const theme = createMuiTheme({
 
 export const routes = [{
   path: START_ROUTE,
-  main: IntroConnector,
+  main: StartSceneConnector,
   exact: true
 }, {
   path: BANK_CONNECT_ROUTE,

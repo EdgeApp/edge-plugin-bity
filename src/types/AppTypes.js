@@ -84,7 +84,7 @@ export type OrderDetail = {
 }
 
 export type WireInformation = {
-  account: string,
+  account_number: string,
   bank_address: string,
   bank_code: string,
   iban: string,
