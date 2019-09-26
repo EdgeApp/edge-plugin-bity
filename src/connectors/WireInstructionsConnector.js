@@ -11,20 +11,25 @@ const mapStateToProps = (state: State) => {
   if(!wireInformation) {
     return {
       poweredBy: POWERED_BY_LOGO,
-      message
+      message,
+      title: 'Bank transfer instructions'
     }
   }
-  message.push('To complete your purchase. Send funds to Bity.  You must include the reference')
+  message.push('Please instruct your bank to do the following payment:')
+  message.push('IBAN: ' + wireInformation.iban)
+  message.push('Reference: ' + wireInformation.reference)
   message.push('Recipient: ' + wireInformation.recipient)
+  message.push('')
+  message.push('Additional Data:')
   message.push('Bank Address: ' + wireInformation.bank_address)
   message.push('Bank Code: ' + wireInformation.bank_code)
-  message.push('Account: ' + wireInformation.account)
-  message.push('IBAN: ' + wireInformation.iban)
+  message.push('Account: ' + wireInformation.account_number)
   message.push('SWIFT BIC: ' + wireInformation.swift_bic)
-  message.push('Reference: ' + wireInformation.reference)
+
   return {
     poweredBy: POWERED_BY_LOGO,
-    message
+    message,
+    title: 'Bank transfer instructions'
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({

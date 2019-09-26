@@ -27,7 +27,8 @@ const mapStateToProps = (state: State) => {
       onOfCurrencyCodeInFiat: null,
       buyOrSell: state.Transaction.type,
       poweredBy: POWERED_BY_LOGO,
-      processing: false
+      processing: false,
+      termsOfService: ''
     }
   }
   const isSell = state.Transaction.type === 'sell'
@@ -52,7 +53,8 @@ const mapStateToProps = (state: State) => {
     onOfCurrencyCodeInFiat: '€' + estimate.pricePerBTC,
     buyOrSell: state.Transaction.type,
     poweredBy: POWERED_BY_LOGO,
-    processing: state.Transaction.processing
+    processing: state.Transaction.processing,
+    termsOfService: 'By creating this order, you are agreeing to Bity\'s terms of service. The order will be executed by Bity'
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({
