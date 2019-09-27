@@ -7,7 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { IntroConnector } from '../connectors/IntroConnector'
 // import { PendingConnector } from '../connectors/PendingConnector'
 import {
-  containerSpinner
+  localContainerSpinner
 } from '../styles/styles'
 import { withStyles } from '@material-ui/core/styles'
 
@@ -46,7 +46,7 @@ class StartSceneComponent extends Component<Props, State> {
   }
 }
 const styles = theme => ({
-  containerSpinner: containerSpinner
+  containerSpinner: localContainerSpinner
 })
 const StartScene = withStyles(styles)(StartSceneComponent)
 export { StartScene }
