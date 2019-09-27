@@ -30,13 +30,17 @@ const mapStateToProps = (state: State) => {
     },
     {
       title: 'Support',
-      body: 'For support please contact \nsupport@bity.com',
-      list: []
+      body: 'For support please contact',
+      list: [],
+      link: 'support@bity.com',
+      linkText: 'support@bity.com'
     },
     {
       title: 'Terms of Service',
       body: 'Orders placed through the Bity Plugin are executed by bity. By creating orders you are agreeing to Bity\'s terms of service ',
-      list: []
+      list: [],
+      link: 'https://bity.com/legal/',
+      linkText: 'Terms of Service'
     }
   ]
   return {

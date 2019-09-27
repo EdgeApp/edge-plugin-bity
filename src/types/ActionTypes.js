@@ -1,10 +1,10 @@
 // @flow
 import type {
+  BuyOrder,
   Estimate,
   LocalStorage,
   Transaction,
-  WalletDetails,
-  WireInformation
+  WalletDetails
 } from '../types/AppTypes'
 export type Action =
   | { type: 'LOCAL_DATA_INIT', data:  LocalStorage}
@@ -23,5 +23,5 @@ export type Action =
   | { type: 'ON_EURO_DIVIDER', data: string}
   | { type: 'UPDATE_BANK_INFO', data: LocalStorage}
   | { type: 'ADD_TRANSACTION', data: Object}
-  | { type: 'ADD_WIRE_INFO', data: WireInformation}
+  | { type: 'ADD_WIRE_INFO', data: BuyOrder}
 

@@ -33,6 +33,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   getPreviousOrders: () => {
     window.edgeProvider.consoleLog('In the connector and getting orders')
     dispatch(getPreviousOrders())
+  },
+  openLink: (arg: string, history: Object) => {
+    window.edgeProvider.consoleLog('trying to link' + arg)
+    window.edgeProvider.openURL(arg)
   }
 })
 export const BuySellConnector = connect(

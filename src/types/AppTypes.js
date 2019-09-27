@@ -30,9 +30,10 @@ export type WalletDetails = {
 }
 
 export type Transaction = {
-  closedAt: number,
-  createdAt: number,
+  closedAt: Date | null,
+  createdAt: Date,
   id: string,
+  type: string,
   customId: string | null,
   source: string,
   dest: string,
@@ -49,7 +50,8 @@ export type Transaction = {
   message: string | null,
   exchangeRate: number,
   blockchainTxId: string | null,
-  destNickname: string | null
+  destNickname: string | null,
+  link: string
 }
 export type Estimate = {
   pricePerBTC: string,
@@ -91,5 +93,24 @@ export type WireInformation = {
   recipient: string,
   reference: string,
   swift_bic: string
+}
+
+export type BuyOrder = {
+  id: string,
+  input: {
+    amount: string,
+    currency: string,
+    iban: string,
+    type: string
+  },
+  output: {
+    type: string,
+    crypto_address: string,
+    currency: string,
+    amount: string
+  },
+  payment_details: WireInformation,
+  timestamp_awaiting_payment_since: string,
+
 }
 
