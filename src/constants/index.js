@@ -8,5 +8,7 @@ export const INITIAL_KEYS = [
   'bic_swift',
   'owner',
   'bank_reference',
-  'status'
+  'status',
+  'orderIds',
+  'orders'
 ]

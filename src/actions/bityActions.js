@@ -82,7 +82,8 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
     // id this is a buy -> here is the details.
     if(!isSell) {
       //payment_details
-      dispatch({type: 'ADD_WIRE_INFO', data: order.payment_details})
+      dispatch({type: 'ADD_WIRE_INFO', data: order})
+      // dispatch({type: 'ADD_WIRE_INFO', data: order.payment_details})
       dispatch(recordOrder(order))
       history.push(WIRE_INSTRUCTIONS_ROUTE)
       return
@@ -116,11 +117,15 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
 
 export const recordOrder = (order: Object) => async (dispatch: Dispatch, getState: GetState) => {
   const state = getState()
+  console.log('sate ', state)
   const orders = state.Bity.orders
+  console.log(' Getting the order thing. ', order)
+  console.log(' state.Bity.orders', state.Bity.orders)
   orders.push(order)
   const newObject = {
     orders: orders
   }
+  console.log('newObject', newObject)
   await window.edgeProvider.writeData(newObject)
   dispatch({type: 'ADD_TRANSACTION', data: order})
 }

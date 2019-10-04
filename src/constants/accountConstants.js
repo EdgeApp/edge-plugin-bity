@@ -16,5 +16,5 @@ export const POWERED_BY_LOGO_DARK = {
   height: 30,
   useBackground: false
 }
-export const MAIN_LOGO = 'https://edge.app/wp-content/uploads/2019/09/logo.png'
+export const MAIN_LOGO = 'http://edge.app/wp-content/uploads/2019/09/logo300.png'
 

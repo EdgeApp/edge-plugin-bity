@@ -7,15 +7,17 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = (state: State) => {
   const wireInformation = state.Transaction.wireInformation
+  const buyOrder = state.Transaction.currentBuyOrder
   const message = []
-  if(!wireInformation) {
+  if(!wireInformation || !buyOrder) {
     return {
       poweredBy: POWERED_BY_LOGO,
       message,
       title: 'Bank transfer instructions'
     }
   }
-  message.push('Please instruct your bank to do the following payment:')
+  message.push('Please instruct your bank to do the following payment :')
+  message.push('Amount: €' + buyOrder.input.amount)
   message.push('IBAN: ' + wireInformation.iban)
   message.push('Reference: ' + wireInformation.reference)
   message.push('Recipient: ' + wireInformation.recipient)

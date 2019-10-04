@@ -12,7 +12,43 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
   }
   const localStore: LocalStorage = await window.edgeProvider.readData(INITIAL_KEYS)
   if (localStore.status === APPROVED) {
+    window.edgeProvider.consoleLog('localStore')
+    window.edgeProvider.consoleLog(localStore)
+    if(!localStore.orderIds) {
+      localStore.orderIds = []
+      await window.edgeProvider.writeData({orderIds: []})
+    }
+    if(!localStore.orders) {
+      localStore.orders =[]
+      await window.edgeProvider.writeData({orders: []})
+    }
+    window.edgeProvider.consoleLog('Local Object')
+    window.edgeProvider.consoleLog(localStore)
     dispatch({type: 'LOCAL_DATA_INIT', data: localStore})
+    // create transactions
+    const transactions = []
+    for(let i = 0; i < localStore.orders.length; i++) {
+      const order = localStore.orders[i]
+      const type = order.input.type === 'bank_account' ? 'Buy' : 'Sell'
+      const sourceName = type === 'Buy' ? order.input.iban : order.input.crypto_address
+      const destName = type === 'Sell' ? order.input.iban : order.input.crypto_address
+      const transaction = {
+        id: order.id,
+        type,
+        closedAt: new Date(order.timestamp_created),
+        createdAt: new Date(order.timestamp_created),
+        dest: 'dest',
+        sourceCurrency: order.input.currency,
+        destCurrency: order.output.currency,
+        sourceAmount: order.input.amount,
+        destAmount: order.output.amount,
+        sourceName,
+        destName,
+        link: 'https://bity.com/exchange/#/order/' + order.id
+      }
+      transactions.push(transaction)
+    }
+    dispatch({type: 'ON_TRANSACTION_HISTORY', data: transactions})
     return
   }
   const newObject = {
