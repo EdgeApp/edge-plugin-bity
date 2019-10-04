@@ -7,16 +7,14 @@
     "manifest.json"
   ],
   "scripts": {
-    "build": "react-scripts build",
+    "build": "react-scripts build && edge-ify -o target -s build && git add target",
     "clean": "rimraf target build",
-    "edge": "edge-ify -o target -s build",
     "eject": "react-scripts eject",
     "flow": "flow",
     "flow:0": "flow; exit 0",
     "lint": "eslint --parser babel-eslint ./src",
     "lint:fix": "npm run lint -- --fix",
-    "precommit": "flow",
-    "prepare": "npm run build; npm run edge",
+    "precommit": "flow && npm run build",
     "start": "react-scripts start",
     "test": "react-scripts test --env=jsdom"
   },
@@ -42,7 +40,7 @@
     "@fortawesome/react-fontawesome":"^0.1.4",
     "@fortawesome/free-brands-svg-icons":"^5.11.2",
     "edge-libplugin": "https://github.com/EdgeApp/edge-libplugin.git#9744aaf61b80",
-    "edge-plugin-screens-and-components": "https://github.com/EdgeApp/edge-plugin-screens-and-components#4a87486",
+    "edge-plugin-screens-and-components": "https://github.com/EdgeApp/edge-plugin-screens-and-components#a245acfd",
     "eslint": "^5.12.0",
     "eslint-plugin-flowtype": "^2.35.0",
     "eslint-plugin-import": "^2.7.0",
