@@ -49,6 +49,7 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
       }
       transactions.push(transaction)
     }
+    transactions.reverse()
     dispatch({type: 'ON_TRANSACTION_HISTORY', data: transactions})
     return
   }
