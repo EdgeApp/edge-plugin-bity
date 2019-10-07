@@ -2,6 +2,7 @@
 
 import { APPROVED, INITIAL_KEYS, NOT_STARTED, TRANSACTION_AMOUNT_ROUTE } from "../constants";
 import type { Dispatch, GetState } from '../types/ReduxTypes'
+import { isValidBIC, isValidIBAN } from 'ibantools'
 
 import type { LocalStorage } from '../types/AppTypes'
 
@@ -68,6 +69,18 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
 }
 
 export const saveBankInfo = (iban:string, swift: string, owner: string, history: Object) => async (dispatch: Dispatch, getState: GetState) => {
+  // validate bank info.
+  // if invalid throw error
+
+  if(!isValidBIC(swift)) {
+    window.edgeProvider.displayError('Invalid swift')
+    return
+  }
+  if(!isValidIBAN(iban)) {
+    window.edgeProvider.displayError('Invalid IBAN')
+    return
+  }
+
   const newObject = {
     iban: iban,
     bic_swift: swift,
