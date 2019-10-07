@@ -40,7 +40,7 @@
     "@fortawesome/react-fontawesome":"^0.1.4",
     "@fortawesome/free-brands-svg-icons":"^5.11.2",
     "edge-libplugin": "https://github.com/EdgeApp/edge-libplugin.git#9744aaf61b80",
-    "edge-plugin-screens-and-components": "https://github.com/EdgeApp/edge-plugin-screens-and-components#a245acfd",
+    "edge-plugin-screens-and-components": "https://github.com/EdgeApp/edge-plugin-screens-and-components#25c8a7a",
     "eslint": "^5.12.0",
     "eslint-plugin-flowtype": "^2.35.0",
     "eslint-plugin-import": "^2.7.0",
