@@ -4,6 +4,7 @@ import {POWERED_BY_LOGO, START_ROUTE} from '../constants/index'
 
 import { WireInstructions } from 'edge-plugin-screens-and-components'
 import { connect } from 'react-redux'
+import { showToast } from '../actions/indexActions'
 
 const mapStateToProps = (state: State) => {
   const wireInformation = state.Transaction.wireInformation
@@ -37,7 +38,8 @@ const mapStateToProps = (state: State) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onNext: (history: Object) => {
     history.push(START_ROUTE)
-  }
+  },
+  onCopy: (arg: string) => dispatch(showToast(arg))
 })
 export const WireInstructionsConnector = connect(
   mapStateToProps,

@@ -8,3 +8,6 @@ export const selectWallet = () => async (dispatch: Dispatch, getState: GetState)
     dispatch({type: 'WALLET_LOADED', data: wallet})
   }
 }
+export const showToast = (arg: string) => async (dispatch: Dispatch, getState: GetState) => {
+  await window.edgeProvider.displayToast(arg)
+}
