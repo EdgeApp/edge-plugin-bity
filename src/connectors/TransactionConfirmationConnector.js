@@ -56,7 +56,7 @@ const mapStateToProps = (state: State) => {
     buyOrSell: state.Transaction.type,
     poweredBy: POWERED_BY_LOGO,
     processing: state.Transaction.processing,
-    termsOfService: 'By creating this order, you are agreeing to Bity\'s terms of service. The order will be executed by Bity',
+    termsOfService: 'By creating this order, you are agreeing to Bity\'s terms of service. The order will be executed by Bity. ',
     link: 'https://bity.com/legal/',
     linkText: 'Terms of Service'
   }
