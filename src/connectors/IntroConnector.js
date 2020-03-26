@@ -20,7 +20,7 @@ const mapStateToProps = (state: State) => {
       body: 'The following fees are applied for buying and selling cryptocurrency with Bity',
       list: [
         'Edge 0.15%',
-        'Bity 0.65%'
+        'Bity 1.05%'
       ]
     },
     {
