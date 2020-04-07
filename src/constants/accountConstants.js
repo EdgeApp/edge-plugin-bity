@@ -18,3 +18,4 @@ export const POWERED_BY_LOGO_DARK = {
 }
 export const MAIN_LOGO = 'http://edge.app/wp-content/uploads/2019/09/logo300.png'
 
+export const PARTNER_FEE = {partner_fee: {factor: 0.005}}

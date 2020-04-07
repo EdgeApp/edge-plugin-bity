@@ -1,7 +1,7 @@
 // @flow
 
 import type { Dispatch, GetState } from '../types/ReduxTypes'
-import {TRANSACTION_CONFIRM_ROUTE, TRANSACTION_SUCCESS_ROUTE, WIRE_INSTRUCTIONS_ROUTE} from '../constants/index'
+import {TRANSACTION_CONFIRM_ROUTE, TRANSACTION_SUCCESS_ROUTE, WIRE_INSTRUCTIONS_ROUTE, PARTNER_FEE} from '../constants/index'
 import { apiEstimate, apiOrder, getOrders } from '../api/api'
 
 import type { OrderDetail } from '../types/AppTypes'
@@ -49,7 +49,8 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
       owner: {
         name: state.Bity.owner
       }
-    }
+    },
+    PARTNER_FEE
   }
   const sellCryptoOrder = {
     input: {
@@ -66,7 +67,8 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
       owner: {
         name: state.Bity.owner
       }
-    }
+    },
+    PARTNER_FEE
   }
   const orderObject = isSell ? sellCryptoOrder : buyCryptoOrder
   try {
@@ -144,7 +146,7 @@ export const getEstimate = (fiat: string, history: Object) => async (dispatch: D
     const outputFix = {
       currency: 'EUR'
     }
-    const payload1 = {input: inputFix, output: outputFix}
+    const payload1 = {input: inputFix, output: outputFix, PARTNER_FEE}
     const fiatDividerEst = await apiEstimate(payload1)
     const fiatDivider = fiatDividerEst.output.amount
     const inputCurrency = isSell ? 'BTC' : 'EUR'
@@ -158,7 +160,7 @@ export const getEstimate = (fiat: string, history: Object) => async (dispatch: D
     const output = {
       currency: outputCurrency
     }
-    const payload = {input, output}
+    const payload = {input, output, PARTNER_FEE}
     const estimate = await apiEstimate(payload)
     estimate.pricePerBTC = fiatDividerEst.output.amount
     dispatch({type: 'ON_ESTIMATE', data: estimate})
