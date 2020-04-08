@@ -1,10 +1,12 @@
 // @flow
 
 import type { Dispatch, GetState } from '../types/ReduxTypes'
-import {TRANSACTION_CONFIRM_ROUTE, TRANSACTION_SUCCESS_ROUTE, WIRE_INSTRUCTIONS_ROUTE, PARTNER_FEE} from '../constants/index'
+import {TRANSACTION_CONFIRM_ROUTE, TRANSACTION_SUCCESS_ROUTE, WIRE_INSTRUCTIONS_ROUTE} from '../constants/index'
 import { apiEstimate, apiOrder, getOrders } from '../api/api'
 
 import type { OrderDetail } from '../types/AppTypes'
+
+const partner_fee = {factor: 0.005}
 
 export const getPreviousOrders = () => async (dispatch: Dispatch, getState: GetState) => {
   window.edgeProvider.consoleLog('Getting previous orders.')
@@ -34,7 +36,9 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
   const fiatAmount = isSell ? output.amount : input.amount
   const address = state.Wallet.wallet ? state.Wallet.wallet.receiveAddress.publicAddress : ''
   const walletName = state.Wallet.wallet ? state.Wallet.wallet.name : 'Bad Wallet Name'
+  const client_value = window.edgeProvider.promoCode ? Number(window.edgeProvider.promoCode) : 0
   const buyCryptoOrder = {
+    client_value,
     output: {
       currency: 'BTC',
       type: 'crypto_address',
@@ -50,9 +54,10 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
         name: state.Bity.owner
       }
     },
-    PARTNER_FEE
+    partner_fee
   }
   const sellCryptoOrder = {
+    client_value,
     input: {
       amount: cryptoAmount,
       currency: 'BTC',
@@ -68,7 +73,7 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
         name: state.Bity.owner
       }
     },
-    PARTNER_FEE
+    partner_fee
   }
   const orderObject = isSell ? sellCryptoOrder : buyCryptoOrder
   try {
@@ -146,7 +151,7 @@ export const getEstimate = (fiat: string, history: Object) => async (dispatch: D
     const outputFix = {
       currency: 'EUR'
     }
-    const payload1 = {input: inputFix, output: outputFix, PARTNER_FEE}
+    const payload1 = {input: inputFix, output: outputFix, partner_fee}
     const fiatDividerEst = await apiEstimate(payload1)
     const fiatDivider = fiatDividerEst.output.amount
     const inputCurrency = isSell ? 'BTC' : 'EUR'
@@ -160,7 +165,7 @@ export const getEstimate = (fiat: string, history: Object) => async (dispatch: D
     const output = {
       currency: outputCurrency
     }
-    const payload = {input, output, PARTNER_FEE}
+    const payload = {input, output, partner_fee}
     const estimate = await apiEstimate(payload)
     estimate.pricePerBTC = fiatDividerEst.output.amount
     dispatch({type: 'ON_ESTIMATE', data: estimate})
