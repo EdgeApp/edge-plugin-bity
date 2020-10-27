@@ -17,7 +17,8 @@ const mapStateToProps = (state: State) => {
     isBuyDisabled,
     isSellDisabled,
     partnerName: 'Bity',
-    poweredBy: POWERED_BY_LOGO
+    poweredBy: POWERED_BY_LOGO,
+    isSellTransaction: window.edgeProvider.deepQuery.type === 'sell'
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({

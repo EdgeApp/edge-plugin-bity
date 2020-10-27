@@ -3,8 +3,18 @@
 import { APPROVED, INITIAL_KEYS, NOT_STARTED, TRANSACTION_AMOUNT_ROUTE } from "../constants";
 import type { Dispatch, GetState } from '../types/ReduxTypes'
 import { isValidBIC, isValidIBAN } from 'ibantools'
+import { asObject, asString, asOptional } from 'cleaners'
 
 import type { LocalStorage } from '../types/AppTypes'
+
+const asAddressInfo = asObject({
+  address1: asString,
+  address2: asOptional(asString),
+  city: asString,
+  country: asString,
+  state: asString,
+  zip: asString
+})
 
 export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => {
   const state = getState()
@@ -20,9 +30,23 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
       await window.edgeProvider.writeData({orderIds: []})
     }
     if(!localStore.orders) {
-      localStore.orders =[]
+      localStore.orders = []
       await window.edgeProvider.writeData({orders: []})
     }
+    let addressInfo = {
+      address1: null,
+      address2: null,
+      city: null,
+      country: null,
+      state: null,
+      zip: null
+    }
+    try {
+      addressInfo = asAddressInfo(localStore)
+    } catch (e) {
+      // Failure OK
+    }
+    Object.assign(localStore, addressInfo)
     window.edgeProvider.consoleLog('Local Object')
     window.edgeProvider.consoleLog(localStore)
     dispatch({type: 'LOCAL_DATA_INIT', data: localStore})
@@ -58,6 +82,12 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
     bic_swift: null,
     bank_reference: null,
     owner: null,
+    address1: null,
+    address2: null,
+    city: null,
+    country: null,
+    state: null,
+    zip: null,
     status: NOT_STARTED,
     orderIds: [],
     orders: []
@@ -69,7 +99,7 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
   dispatch({type: 'LOCAL_DATA_INIT', data: newObject})
 }
 
-export const saveBankInfo = (iban:string, swift: string, owner: string, history: Object) => async (dispatch: Dispatch, getState: GetState) => {
+export const saveBankInfo = (iban:string, swift: string, owner: string, address1: string, address2: string, city: string, country: string, state: string, zip: string, history: Object) => async (dispatch: Dispatch, getState: GetState) => {
   // validate bank info.
   // if invalid throw error
 
@@ -87,18 +117,30 @@ export const saveBankInfo = (iban:string, swift: string, owner: string, history:
     bic_swift: swift,
     bank_reference: null,
     owner: owner,
+    address1,
+    address2,
+    city,
+    country,
+    state,
+    zip,
     status: APPROVED
   }
   await window.edgeProvider.writeData(newObject)
   dispatch({type: 'LOCAL_DATA_INIT', data: newObject})
   history.push('/')
 }
-export const updateBankInfo = (iban:string, swift: string, owner: string, history: Object) => async (dispatch: Dispatch, getState: GetState) => {
+export const updateBankInfo = (iban:string, swift: string, owner: string, address1: string, address2: string, city: string, country: string, state: string, zip: string, history: Object) => async (dispatch: Dispatch, getState: GetState) => {
   const newObject = {
     iban: iban,
     bic_swift: swift,
     bank_reference: null,
     owner: owner,
+    address1,
+    address2,
+    city,
+    country,
+    state,
+    zip
   }
   await window.edgeProvider.writeData(newObject)
   dispatch({type: 'UPDATE_BANK_INFO', data: newObject})

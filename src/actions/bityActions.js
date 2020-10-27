@@ -70,7 +70,13 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
       currency: 'EUR',
       type: 'bank_account',
       owner: {
-        name: state.Bity.owner
+        name: state.Bity.owner,
+        address: state.Bity.address1,
+        address_compliment: state.Bity.address2,
+        city: state.Bity.city,
+        country: state.Bity.country,
+        state: state.Bity.state,
+        zip: state.Bity.zip
       }
     },
     partner_fee
