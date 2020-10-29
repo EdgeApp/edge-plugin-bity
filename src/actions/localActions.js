@@ -33,14 +33,7 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
       localStore.orders = []
       await window.edgeProvider.writeData({orders: []})
     }
-    let addressInfo = {
-      address1: null,
-      address2: null,
-      city: null,
-      country: null,
-      state: null,
-      zip: null
-    }
+    let addressInfo = INITIAL_KEYS.reduce((result, key: string) => Object.assign(result, {[key]: ''}), {})
     try {
       addressInfo = asAddressInfo(localStore)
     } catch (e) {
@@ -80,14 +73,7 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
   const newObject = {
     iban: null,
     bic_swift: null,
-    bank_reference: null,
     owner: null,
-    address1: null,
-    address2: null,
-    city: null,
-    country: null,
-    state: null,
-    zip: null,
     status: NOT_STARTED,
     orderIds: [],
     orders: []
@@ -115,7 +101,6 @@ export const saveBankInfo = (iban:string, swift: string, owner: string, address1
   const newObject = {
     iban: iban,
     bic_swift: swift,
-    bank_reference: null,
     owner: owner,
     address1,
     address2,
@@ -133,7 +118,6 @@ export const updateBankInfo = (iban:string, swift: string, owner: string, addres
   const newObject = {
     iban: iban,
     bic_swift: swift,
-    bank_reference: null,
     owner: owner,
     address1,
     address2,

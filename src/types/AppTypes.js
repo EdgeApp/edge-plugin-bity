@@ -3,7 +3,6 @@
 export type LocalStorage = {
   iban: string | null,
   bic_swift: string | null,
-  bank_reference: string | null,
   owner: string | null,
   address1: string | null,
   address2: string | null,

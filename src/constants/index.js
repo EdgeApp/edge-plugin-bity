@@ -13,7 +13,6 @@ export const INITIAL_KEYS = [
   'country',
   'state',
   'zip',
-  'bank_reference',
   'status',
   'orderIds',
   'orders'

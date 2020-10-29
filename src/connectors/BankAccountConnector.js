@@ -12,12 +12,6 @@ const mapStateToProps = (state: State) => {
     iban: state.Bity.iban,
     owner: state.Bity.owner,
     swift: state.Bity.bic_swift,
-    address1: state.Bity.address1,
-    address2: state.Bity.address2,
-    city: state.Bity.city,
-    country: state.Bity.country,
-    state: state.Bity.state,
-    zip: state.Bity.zip,
     requireAddress: window.edgeProvider.deepQuery.type === 'sell'
   }
 }
