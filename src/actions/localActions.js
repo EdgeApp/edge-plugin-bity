@@ -33,7 +33,14 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
       localStore.orders = []
       await window.edgeProvider.writeData({orders: []})
     }
-    let addressInfo = INITIAL_KEYS.reduce((result, key: string) => Object.assign(result, {[key]: ''}), {})
+    let addressInfo = {
+      address1: null,
+      address2: null,
+      city: null,
+      country: null,
+      state: null,
+      zip: null
+    }
     try {
       addressInfo = asAddressInfo(localStore)
     } catch (e) {
