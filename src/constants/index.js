@@ -7,7 +7,12 @@ export const INITIAL_KEYS = [
   'iban',
   'bic_swift',
   'owner',
-  'bank_reference',
+  'address1',
+  'address2',
+  'city',
+  'country',
+  'state',
+  'zip',
   'status',
   'orderIds',
   'orders'
