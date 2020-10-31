@@ -72,7 +72,7 @@ export const placeOrder = (history: Object) => async (dispatch: Dispatch, getSta
       owner: {
         name: state.Bity.owner,
         address: state.Bity.address1,
-        address_compliment: state.Bity.address2,
+        address_complement: state.Bity.address2,
         city: state.Bity.city,
         country: state.Bity.country,
         state: state.Bity.state,
