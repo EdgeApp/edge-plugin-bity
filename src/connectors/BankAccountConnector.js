@@ -12,6 +12,7 @@ const mapStateToProps = (state: State) => {
     iban: state.Bity.iban,
     owner: state.Bity.owner,
     swift: state.Bity.bic_swift,
+    country: state.Bity.country != null && state.Bity.country.length === 2 ? state.Bity.country : window.edgeProvider.deepQuery.countryCode,
     requireAddress: window.edgeProvider.deepQuery.type === 'sell'
   }
 }
