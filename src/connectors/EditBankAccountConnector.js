@@ -17,7 +17,7 @@ const mapStateToProps = (state: State) => {
     address1: state.Bity.address1,
     address2: state.Bity.address2,
     city: state.Bity.city,
-    country: state.Bity.country,
+    country: state.Bity.country != null && state.Bity.country.length === 2 ? state.Bity.country : window.edgeProvider.deepQuery.countryCode,
     state: state.Bity.state,
     zip: state.Bity.zip,
     requireAddress: window.edgeProvider.deepQuery.type === 'sell'
