@@ -40,7 +40,7 @@
     "@material-ui/core": "^4.4.3",
     "@material-ui/icons": "^4.4.3",
     "edge-libplugin": "https://github.com/EdgeApp/edge-libplugin.git#9744aaf61b80",
-    "edge-plugin-screens-and-components": "git://github.com/EdgeApp/edge-plugin-screens-and-components#45d99bc970ac7e36d8b8dd74d0726b1c75bf4032",
+    "edge-plugin-screens-and-components": "git://github.com/EdgeApp/edge-plugin-screens-and-components#707ba65d6836921ee853b7d6dd9ad88467a5d6dc",
     "eslint": "^5.12.0",
     "eslint-plugin-flowtype": "^2.35.0",
     "eslint-plugin-import": "^2.7.0",
