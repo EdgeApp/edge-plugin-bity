@@ -25,7 +25,7 @@ const mapStateToProps = (state: State) => {
     },
     {
       title: 'No Personal Info ',
-      body: 'Users can trade up to €1000 per day without providing any personal info.',
+      body: 'Users can trade up to €900 per day without providing any personal info.',
       list: []
     },
     {
