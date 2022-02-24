@@ -3,6 +3,7 @@
 import { APPROVED, INITIAL_KEYS, NOT_STARTED, TRANSACTION_AMOUNT_ROUTE } from "../constants";
 import type { Dispatch, GetState } from '../types/ReduxTypes'
 import { isValidBIC, isValidIBAN } from 'ibantools'
+import { readData, writeData } from '../util/utils.js'
 import { asObject, asString, asOptional } from 'cleaners'
 
 import type { LocalStorage } from '../types/AppTypes'
@@ -21,17 +22,17 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
   if(state.Bity.status === APPROVED) {
     return
   }
-  const localStore: LocalStorage = await window.edgeProvider.readData(INITIAL_KEYS)
+  const localStore: LocalStorage = await readData(INITIAL_KEYS)
   if (localStore.status === APPROVED) {
     window.edgeProvider.consoleLog('localStore')
     window.edgeProvider.consoleLog(localStore)
     if(!localStore.orderIds) {
       localStore.orderIds = []
-      await window.edgeProvider.writeData({orderIds: []})
+      await writeData({orderIds: []})
     }
     if(!localStore.orders) {
       localStore.orders = []
-      await window.edgeProvider.writeData({orders: []})
+      await writeData({orders: []})
     }
     let addressInfo = {
       address1: null,
@@ -87,7 +88,7 @@ export const initInfo = () => async (dispatch: Dispatch, getState: GetState) => 
   }
 
   if (!localStore.status) {
-    await window.edgeProvider.writeData({status: NOT_STARTED})
+    await writeData({status: NOT_STARTED})
   }
   dispatch({type: 'LOCAL_DATA_INIT', data: newObject})
 }
@@ -117,7 +118,7 @@ export const saveBankInfo = (iban:string, swift: string, owner: string, address1
     zip,
     status: APPROVED
   }
-  await window.edgeProvider.writeData(newObject)
+  await writeData(newObject)
   dispatch({type: 'LOCAL_DATA_INIT', data: newObject})
   history.push('/')
 }
@@ -133,7 +134,7 @@ export const updateBankInfo = (iban:string, swift: string, owner: string, addres
     state,
     zip
   }
-  await window.edgeProvider.writeData(newObject)
+  await writeData(newObject)
   dispatch({type: 'UPDATE_BANK_INFO', data: newObject})
   history.push(TRANSACTION_AMOUNT_ROUTE)
 }
