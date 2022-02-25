@@ -3,6 +3,7 @@
 import type { Dispatch, GetState } from '../types/ReduxTypes'
 import {TRANSACTION_CONFIRM_ROUTE, TRANSACTION_SUCCESS_ROUTE, WIRE_INSTRUCTIONS_ROUTE} from '../constants/index'
 import { apiEstimate, apiOrder, getOrders } from '../api/api'
+import { writeData } from '../util/utils.js'
 
 import type { OrderDetail } from '../types/AppTypes'
 
@@ -139,7 +140,7 @@ export const recordOrder = (order: Object) => async (dispatch: Dispatch, getStat
     orders: orders
   }
   console.log('newObject', newObject)
-  await window.edgeProvider.writeData(newObject)
+  await writeData(newObject)
   dispatch({type: 'ADD_TRANSACTION', data: order})
 }
 
